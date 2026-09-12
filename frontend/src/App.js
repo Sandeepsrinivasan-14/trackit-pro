@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ToastProvider } from './components/Toast';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Projects from './pages/Projects';
@@ -8,14 +9,15 @@ import Issues from './pages/Issues';
 import Users from './pages/Users';
 import Comments from './pages/Comments';
 import Profile from './pages/Profile';
-import './App.css';
+import './index.css';
 
 const ProtectedRoute = ({ children }) => {
     const { token, loading } = useAuth();
     if (loading) {
         return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white' }}>
-                Loading...
+            <div className="flex-center" style={{ height: '100vh', flexDirection: 'column', gap: 16 }}>
+                <div className="loading-spinner"></div>
+                <span style={{ color: 'var(--text-muted)', fontSize: '.9rem' }}>Loading TrackIt...</span>
             </div>
         );
     }
@@ -42,7 +44,9 @@ function App() {
     return (
         <BrowserRouter>
             <AuthProvider>
-                <AppRoutes />
+                <ToastProvider>
+                    <AppRoutes />
+                </ToastProvider>
             </AuthProvider>
         </BrowserRouter>
     );
