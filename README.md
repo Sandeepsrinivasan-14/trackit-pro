@@ -1,96 +1,178 @@
+<div align="center">
+
 # TrackIt Pro 🎯
 
 **The complete issue tracking & project management platform for modern engineering teams.**
 
-A full-stack MERN application with role-based access control, Kanban boards, real-time analytics, and a premium dark UI.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-trackit--pro--rho.vercel.app-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://trackit-pro-rho.vercel.app)
+[![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47a248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
+
+</div>
 
 ---
 
-## Features
+## 🌐 Live Demo
 
-- **Kanban Board** — drag-and-drop issue tracking across 5 status columns (Open → In Progress → Testing → Resolved → Closed)
-- **Analytics Dashboard** — live stats, SVG donut chart, priority matrix, activity timeline, and top-performer leaderboard
-- **Project Management** — category-colored project cards with member avatar stacks, pagination, and full CRUD
-- **Team Directory** — role-colored user cards with search and role filter
-- **Discussions** — thread-style comment system linked to issues and projects
-- **Profile** — hero card with issue stats, breakdown progress bars, and member history
-- **Role-Based Access Control** — Admin, Manager, Developer, Tester with permission-aware UI
-- **Toast Notifications** — custom-built notification system (success / error / info / warning)
-- **Premium Dark UI** — aurora animated backgrounds, glassmorphism navbar, 3D card hover effects
+> **[https://trackit-pro-rho.vercel.app](https://trackit-pro-rho.vercel.app)**
 
 ---
 
-## Tech Stack
+## 📸 Screenshots
+
+### Login
+> Split-screen login with brand panel, feature highlights, and one-click demo account access.
+
+![Login Page](docs/screenshots/login.png)
+
+---
+
+### Dashboard
+> Real-time analytics with stat cards, SVG donut chart, priority matrix, activity timeline, and top-performer leaderboard.
+
+![Dashboard](docs/screenshots/dashboard.png)
+
+---
+
+### Issues — Kanban Board
+> Visual issue tracking across 5 status columns: Open → In Progress → Testing → Resolved → Closed. Includes a list view toggle and inline detail modal with status change, comments, and metadata.
+
+![Issues Kanban Board](docs/screenshots/issues-kanban.png)
+
+---
+
+### Projects
+> Category-colored project cards with member avatar stacks, search, status filter, pagination, and full create/edit/delete flow.
+
+![Projects](docs/screenshots/projects.png)
+
+---
+
+### Team Directory
+> Role-colored user cards with role summary chips, search by name or email, and role filter.
+
+![Team Directory](docs/screenshots/users.png)
+
+---
+
+### Discussions
+> Thread-style comment view linked to issues and projects, with role-colored author avatars and search.
+
+![Discussions](docs/screenshots/comments.png)
+
+---
+
+### Profile
+> Hero card with avatar, role badge, and membership date. Activity stats, issue breakdown progress bars, and full issue history.
+
+![Profile](docs/screenshots/profile.png)
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| **Kanban Board** | 5-column visual board — Open, In Progress, Testing, Resolved, Closed |
+| **Analytics Dashboard** | Live stats, donut chart, priority matrix, activity timeline |
+| **Project Management** | Full CRUD with category colors, member stacks, and pagination |
+| **Team Directory** | Role-colored cards with search and role filter |
+| **Discussions** | Comment threads linked to issues with project context |
+| **Profile** | Activity stats and issue breakdown per user |
+| **Role-Based Access** | Admin · Manager · Developer · Tester with permission-aware UI |
+| **Toast Notifications** | Custom success / error / info / warning system |
+| **Premium Dark UI** | Aurora backgrounds, glassmorphism, 3D card hover effects |
+
+---
+
+## 🛠 Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
-| Frontend | React 19, React Router v7, CSS3 (custom design system) |
-| Backend | Node.js, Express 5 |
-| Database | MongoDB + Mongoose |
-| Auth | JWT + bcryptjs |
-| HTTP | Axios with interceptors |
+|-------|------------|
+| **Frontend** | React 19, React Router v7, Custom CSS Design System |
+| **Backend** | Node.js, Express 5 |
+| **Database** | MongoDB + Mongoose |
+| **Auth** | JWT + bcryptjs |
+| **HTTP Client** | Axios with interceptors |
+| **Deployment** | Vercel (frontend) |
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 trackit-pro/
-├── frontend/          # React app (Create React App)
+├── frontend/                  # React application
 │   ├── src/
-│   │   ├── components/   # Navbar, Toast, DonutChart
-│   │   ├── pages/        # Dashboard, Issues, Projects, Users, Comments, Profile, Login
-│   │   ├── context/      # AuthContext
-│   │   └── services/     # Axios API client
-│   └── public/
-└── backend/           # Express REST API
-    └── src/
-        ├── routes/
-        ├── models/
-        ├── controllers/
-        └── middleware/
+│   │   ├── components/        # Navbar, Toast, DonutChart
+│   │   ├── pages/             # Dashboard, Issues, Projects, Users,
+│   │   │                      #   Comments, Profile, Login
+│   │   ├── context/           # AuthContext (JWT auth state)
+│   │   └── services/          # Axios API client
+│   ├── public/
+│   └── vercel.json            # SPA rewrite rules
+├── backend/                   # Express REST API
+│   └── src/
+│       ├── routes/            # Auth, Issues, Projects, Users, Comments
+│       ├── models/            # Mongoose schemas
+│       ├── controllers/       # Business logic
+│       └── middleware/        # Auth guard, role check
+├── docs/
+│   └── screenshots/           # App screenshots
+├── package.json               # Monorepo root scripts
+└── README.md
 ```
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js 18+
 - MongoDB (local or Atlas)
 
-### Backend
+### 1. Clone the repository
+```bash
+git clone https://github.com/Sandeepsrinivasan-14/trackit-pro.git
+cd trackit-pro
+```
+
+### 2. Start the backend
 ```bash
 cd backend
 npm install
-# Create .env with MONGO_URI and JWT_SECRET
-npm run dev        # starts on :5000
+```
+Create a `.env` file in `backend/`:
+```env
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+PORT=5000
+```
+```bash
+npm run dev        # starts on http://localhost:5000
 ```
 
-### Frontend
+### 3. Start the frontend
 ```bash
 cd frontend
 npm install
-npm start          # starts on :3000
+npm start          # starts on http://localhost:3000
 ```
 
 ---
 
-## Roles
+## 👥 Roles & Permissions
 
-| Role | Capabilities |
-|------|-------------|
-| **Admin** | Full access — manage users, all projects, all issues, delete comments |
-| **Manager** | Create & manage projects, assign issues |
+| Role | Access |
+|------|--------|
+| **Admin** | Full access — manage users, all projects, all issues, delete any comment |
+| **Manager** | Create and manage projects, assign issues to developers |
 | **Developer** | View assigned issues, update status, post comments |
 | **Tester** | Report issues, update testing status |
 
 ---
 
-## Author
+## 📄 License
 
-**Sandeep Srinivasan**
-
----
-
-*Built with TrackIt Pro — ship faster, track smarter.*
+MIT © [Sandeep Srinivasan](https://github.com/Sandeepsrinivasan-14)
