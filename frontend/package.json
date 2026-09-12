@@ -1,6 +1,7 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
+  "name": "trackit-pro-frontend",
+  "version": "1.0.0",
+  "description": "TrackIt Pro React frontend — Kanban boards, dashboards, and team management.",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
