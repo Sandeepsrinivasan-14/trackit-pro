@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../components/Toast';
 import API from '../services/api';
@@ -23,7 +23,7 @@ export default function Comments() {
     const [form, setForm] = useState({ issueId: '', message: '' });
     const [search, setSearch] = useState('');
 
-    const fetchAll = async () => {
+    const fetchAll = useCallback(async () => {
         setLoading(true);
         try {
             const [commRes, issRes] = await Promise.all([
@@ -38,9 +38,9 @@ export default function Comments() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [toast]);
 
-    useEffect(() => { fetchAll(); }, []);
+    useEffect(() => { fetchAll(); }, [fetchAll]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

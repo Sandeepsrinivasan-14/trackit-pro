@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import API from '../services/api';
 import Navbar from '../components/Navbar';
 import { useToast } from '../components/Toast';
@@ -21,7 +21,7 @@ export default function Users() {
     const [search, setSearch] = useState('');
     const [roleFilter, setRoleFilter] = useState('');
 
-    const fetchUsers = async () => {
+    const fetchUsers = useCallback(async () => {
         setLoading(true);
         try {
             const res = await API.get('/users');
@@ -33,9 +33,9 @@ export default function Users() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [toast]);
 
-    useEffect(() => { fetchUsers(); }, []);
+    useEffect(() => { fetchUsers(); }, [fetchUsers]);
 
     const filtered = users.filter(u =>
         (!search || u.name.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase())) &&

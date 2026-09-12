@@ -117,7 +117,7 @@ export default function Issues() {
     const handleStatusChange = async (issueId, status) => {
         setStatusUpdating(true);
         try {
-            const res = await API.patch(`/issues/${issueId}/status`, { status });
+            await API.patch(`/issues/${issueId}/status`, { status });
             toast.success(`Status → ${status}`);
             if (issueDetail?._id === issueId) {
                 setIssueDetail(d => ({ ...d, status }));

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../components/Toast';
 import API from '../services/api';
@@ -47,7 +47,7 @@ export default function Projects() {
     const isAuthorized = ['admin', 'manager'].includes(user?.role);
     const PER_PAGE = 9;
 
-    const fetchProjects = async () => {
+    const fetchProjects = useCallback(async () => {
         setLoading(true);
         try {
             const res = await API.get('/projects');
@@ -59,9 +59,9 @@ export default function Projects() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [toast]);
 
-    useEffect(() => { fetchProjects(); }, []);
+    useEffect(() => { fetchProjects(); }, [fetchProjects]);
 
     const openCreate = () => {
         setEditProject(null);
