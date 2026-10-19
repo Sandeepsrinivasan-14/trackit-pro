@@ -4,7 +4,7 @@
     "description": "TrackIt Pro — The complete issue tracking & project management platform for modern engineering teams.",
     "keywords": ["issue-tracking", "project-management", "mern", "kanban"],
     "author": "Sandeep Srinivasan",
-    "license": "ISC",
+    "license": "MIT",
     "private": true,
     "scripts": {
         "start:backend": "cd backend && node server.js",
