@@ -13,10 +13,29 @@ const ActivityLog = require('./models/ActivityLog');
 const syncRoutes = require('./routes/sync');
 
 const app = express();
-app.use(cors());
+
+// CORS: only allow the origins listed in CORS_ORIGINS (comma-separated).
+// In development (NODE_ENV != production) localhost:3000 is allowed by default.
+const allowedOrigins = (process.env.CORS_ORIGINS || '')
+    .split(',')
+    .map(o => o.trim())
+    .filter(Boolean);
+if (process.env.NODE_ENV !== 'production' && allowedOrigins.length === 0) {
+    allowedOrigins.push('http://localhost:3000', 'http://127.0.0.1:3000');
+}
+app.use(cors({
+    origin: (origin, callback) => {
+        // Non-browser clients (curl, server-to-server) send no Origin header.
+        if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+        return callback(null, false);
+    },
+}));
 app.use(express.json());
 
+// Demo accounts have well-known passwords, so they are only created when explicitly
+// enabled with SEED_DEMO_USERS=true (never by default, and never required in production).
 const initUsers = async () => {
+    if (process.env.SEED_DEMO_USERS !== 'true') return false;
     const defaultUsers = [
         { name: "Admin User", email: "admin@test.com", password: "admin123", role: "admin", userId: "usr-admin" },
         { name: "Manager User", email: "manager@test.com", password: "manager123", role: "manager", userId: "usr-manager" },
@@ -30,6 +49,7 @@ const initUsers = async () => {
             await User.create(user);
         }
     }
+    return true;
 };
 
 const authMiddleware = async (req, res, next) => {
@@ -1094,8 +1114,7 @@ app.use('/sync', syncRoutes);
 mongoose.connect(process.env.MONGODB_URI)
     .then(async () => {
         console.log('MongoDB connected successfully');
-        await initUsers();
-        console.log('Default users initialized');
+        if (await initUsers()) console.log('Demo users initialized (SEED_DEMO_USERS=true)');
     })
     .catch(err => console.error('MongoDB connection error:', err.message));
 

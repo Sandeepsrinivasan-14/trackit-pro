@@ -4,6 +4,7 @@
     "main":  "index.js",
     "scripts":  {
                     "start":  "node server.js",
+                    "test":  "node --test test/*.test.js",
                     "dev":  "nodemon server.js"
                 },
     "keywords":  ["trackit-pro", "api", "express", "mongodb"],

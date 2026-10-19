@@ -156,10 +156,16 @@ npm install
 Create a `.env` file inside `backend/`:
 
 ```env
-MONGO_URI=your_mongodb_connection_string
+MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 PORT=5000
+# Comma-separated list of frontend origins allowed by CORS (localhost:3000 is allowed in development)
+CORS_ORIGINS=http://localhost:3000
+# Optional: create well-known demo users (admin@test.com etc.). Never enable in production.
+SEED_DEMO_USERS=true
 ```
+
+To show the one-click demo accounts on the login page, start the frontend with `REACT_APP_DEMO_MODE=true`.
 
 ```bash
 npm run dev
