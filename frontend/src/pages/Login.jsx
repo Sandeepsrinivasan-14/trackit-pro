@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-// Demo accounts are only shown when the build sets REACT_APP_DEMO_MODE=true
+// Demo accounts are only shown when the build sets VITE_DEMO_MODE=true
 // (and the API was started with SEED_DEMO_USERS=true).
-const DEMO_MODE = process.env.REACT_APP_DEMO_MODE === 'true';
+const DEMO_MODE = import.meta.env.VITE_DEMO_MODE === 'true';
 
 const DEMO_ACCOUNTS = [
     { role: 'Admin',     email: 'admin@test.com',     password: 'admin123' },
