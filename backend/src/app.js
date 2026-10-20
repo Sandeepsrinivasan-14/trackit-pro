@@ -1108,8 +1108,9 @@ app.get('/', (req, res) => {
     res.json({ success: true, message: 'Issue Tracking API Running' });
 });
 
-app.use('/api/sync', syncRoutes);
-app.use('/sync', syncRoutes);
+// Importing data creates users and rewrites roles, so only admins may trigger it.
+app.use('/api/sync', authMiddleware, authorize('admin'), syncRoutes);
+app.use('/sync', authMiddleware, authorize('admin'), syncRoutes);
 
 mongoose.connect(process.env.MONGODB_URI)
     .then(async () => {
