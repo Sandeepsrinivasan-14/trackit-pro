@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
+// Demo accounts are only shown when the build sets REACT_APP_DEMO_MODE=true
+// (and the API was started with SEED_DEMO_USERS=true).
+const DEMO_MODE = process.env.REACT_APP_DEMO_MODE === 'true';
+
 const DEMO_ACCOUNTS = [
     { role: 'Admin',     email: 'admin@test.com',     password: 'admin123' },
     { role: 'Manager',   email: 'manager@test.com',   password: 'manager123' },
@@ -143,6 +147,7 @@ export default function Login() {
                         </button>
                     </form>
 
+                    {DEMO_MODE && (
                     <div className="demo-accounts mt-24" data-testid="demo-accounts-info">
                         <div className="demo-accounts-title">Quick Access — Demo Accounts</div>
                         <div className="demo-btns">
@@ -159,6 +164,7 @@ export default function Login() {
                             ))}
                         </div>
                     </div>
+                    )}
                 </div>
             </div>
         </div>
