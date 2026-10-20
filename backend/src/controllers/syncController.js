@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const axios = require('axios');
 const User = require('../models/User');
 const Project = require('../models/Project');
@@ -31,8 +32,14 @@ const mapStatus = (st) => {
 exports.syncDataset = async (req, res, next) => {
   try {
     const apiUrl = process.env.DATASET_API_URL || 'https://t4e-testserver.onrender.com/api';
-    const studentId = process.env.STUDENT_ID || 'SANDEEP SRINIVASAN S';
-    const password = process.env.STUDENT_PASSWORD || '203264';
+    const studentId = process.env.STUDENT_ID;
+    const password = process.env.STUDENT_PASSWORD;
+    if (!studentId || !password) {
+      return res.status(503).json({
+        success: false,
+        message: 'Dataset sync is not configured (set STUDENT_ID and STUDENT_PASSWORD)',
+      });
+    }
     const set = req.body.set || process.env.DATASET_SET || 'setB';
 
     console.log('Syncing dataset from external API...');
@@ -126,7 +133,8 @@ exports.syncDataset = async (req, res, next) => {
         } else {
           const newUser = await User.create({
             ...cleanUserData,
-            password: 'defaultPass123',
+            // Imported accounts get an unguessable password unless SYNC_DEFAULT_PASSWORD is set.
+            password: process.env.SYNC_DEFAULT_PASSWORD || crypto.randomBytes(18).toString('base64url'),
           });
           userMap.set(cleanUserData.userId, newUser._id);
           inserted++;

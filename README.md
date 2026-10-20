@@ -163,6 +163,11 @@ PORT=5000
 CORS_ORIGINS=http://localhost:3000
 # Optional: create well-known demo users (admin@test.com etc.). Never enable in production.
 SEED_DEMO_USERS=true
+# Optional: dataset import (POST /api/sync, admin only). Needs the credentials for the external dataset API.
+# STUDENT_ID=...
+# STUDENT_PASSWORD=...
+# Optional: password given to imported users (a random one is used if unset)
+# SYNC_DEFAULT_PASSWORD=...
 ```
 
 To show the one-click demo accounts on the login page, start the frontend with `REACT_APP_DEMO_MODE=true`.
